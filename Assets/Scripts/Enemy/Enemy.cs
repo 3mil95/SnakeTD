@@ -28,6 +28,7 @@ public class Enemy : MonoBehaviour
     }
 
     public void DestroyEnemy() {
+        ScreenShake.main.ScreenShack();
         GameObject go = Instantiate(explotion, transform.position - new Vector3(0,0,2), Quaternion.identity);
         ParticleSystem ps = go.GetComponent<ParticleSystem>();
         var main = ps.main;

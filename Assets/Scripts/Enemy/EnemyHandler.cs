@@ -37,6 +37,9 @@ public class EnemyHandler : MonoBehaviour
             float sqDist = Mathf.Pow(pos.x - enemy.transform.position.x, 2) + Mathf.Pow(pos.y - enemy.transform.position.y, 2);
             if (sqDist < nearestDist) {
                 float mult = 1 - sqDist / range;
+                if (mult < 0) {
+                    mult = 0;
+                }
                 enemy.health.TakeDamage(dmg * mult);
             }
         }

@@ -15,9 +15,9 @@ public class WaveHandler : MonoBehaviour
     [SerializeField]
     private EnemyType[] enemyTypes;
 
-    private float WaveNumber = 0;
+    private int WaveNumber = 0;
     private float timeToNextWave = 0;
-    public float timeBetweenWaves = 5;
+    public float timeBetweenWaves = 7;
 
     public int numOfEnemies = 30;
     public int numberOfSpewners {get; set;} = 0;
@@ -30,19 +30,21 @@ public class WaveHandler : MonoBehaviour
     void Start()
     {
         main = this;
+        timeToNextWave = timeBetweenWaves;
     }
 
     // Update is called once per frame
     void Update()
     {
         if (numberOfSpewners == 0) {
-            for (int i = 0; i < 4; i++) {
-                pickUpSpawner.SpawnPickUp();
-            }
+            WaveNumber++;
+            UIHandler.main.SetWaveNumber(WaveNumber);
+            pickUpSpawner.SpawnPickUps();
             numberOfSpewners = -1;
         }
         if (numberOfSpewners > 0) return;
         timeToNextWave -= Time.deltaTime;
+        UIHandler.main.SetNextWave(timeToNextWave);
 
         if (timeToNextWave > 0) return;
         SpawnWave();
@@ -51,14 +53,14 @@ public class WaveHandler : MonoBehaviour
     }
 
     private void SpawnWave() {
-        numberOfSpewners = Random.Range(1,4);
+        numberOfSpewners = Mathf.RoundToInt(Random.Range(1f + WaveNumber * 0.25f, 2.7f + WaveNumber * 0.3f));
 
         for (int i = 0; i < numberOfSpewners; i++) {
             GameObject go = Instantiate(enemySpawner, new Vector3(1000,1000,0), Quaternion.identity);
             EnemySpwner enemySpawnerScript = go.GetComponent<EnemySpwner>();
 
             float delay = Random.Range(1f, 4f);
-            int enemyCount = Random.Range(4,20);
+            int enemyCount = Random.Range(10,15);
             int eTypeIndex = Random.Range(0,enemyTypes.Length);
 
             enemySpawnerScript.setPropertys(delay, enemyCount, enemyTypes[eTypeIndex]);

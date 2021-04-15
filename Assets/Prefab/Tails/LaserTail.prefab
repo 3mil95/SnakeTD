@@ -9,7 +9,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1723580721471537153, guid: d80756ee262ed59438cbb94fb6f4231d, type: 3}
       propertyPath: m_Name
-      value: TailGreen Variant
+      value: LaserTail
+      objectReference: {fileID: 0}
+    - target: {fileID: 1818451342879480096, guid: d80756ee262ed59438cbb94fb6f4231d, type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.y
+      value: 1.0039062
       objectReference: {fileID: 0}
     - target: {fileID: 6674121525637193058, guid: d80756ee262ed59438cbb94fb6f4231d, type: 3}
       propertyPath: m_RootOrder
@@ -56,6 +60,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8061264821337820567, guid: d80756ee262ed59438cbb94fb6f4231d, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 6815916d9278755438d2c3a710f6c062, type: 3}
+    - target: {fileID: 8061264821337820567, guid: d80756ee262ed59438cbb94fb6f4231d, type: 3}
       propertyPath: m_Color.b
       value: 0
       objectReference: {fileID: 0}
@@ -100,6 +108,10 @@ PrefabInstance:
     - target: {fileID: 2841242205129880872, guid: fe5149ca0711ed044a3ad13976fe6ba7, type: 3}
       propertyPath: m_Parameters.colorGradient.key1.r
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7664432243571276631, guid: fe5149ca0711ed044a3ad13976fe6ba7, type: 3}
+      propertyPath: pitchVariation
+      value: 0.01
       objectReference: {fileID: 0}
     - target: {fileID: 7684666457057566432, guid: fe5149ca0711ed044a3ad13976fe6ba7, type: 3}
       propertyPath: m_RootOrder

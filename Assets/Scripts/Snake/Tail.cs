@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Tail : MonoBehaviour
 {
-    Tail next;
+    public Tail next { get; private set; }
 
     public void Move(Vector3 newPos) {
         Vector3 pos = transform.position;

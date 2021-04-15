@@ -4,30 +4,44 @@ using UnityEngine;
 
 public class PickUp : MonoBehaviour
 {
-    private SpriteRenderer[] sprites;
+    private SpriteRenderer sprite;
     public Color color;
     public GameObject tail; 
+
+    public float lifeTime = 10f;
 
 
 
     // Start is called before the first frame update
     void Start()
     {
-        sprites = GetComponentsInChildren<SpriteRenderer>();
+        sprite = GetComponent<SpriteRenderer>();
         GameGrid.grid.scaleToGrid(transform, 0.8f);
     }
 
+    private void Update() {
+        lifeTime -= Time.deltaTime;
+        setOpacity(lifeTime / 5);
+        if (lifeTime <= 0) {
+            Destroy(gameObject);
+        }
+    }
+
+    void setOpacity(float opacity) {
+        if (opacity > 1) return;
+        Color c = sprite.color;
+        c.a = opacity;
+        sprite.color = c;
+    }
+
     public void setPickUpType(PickUpType pickUpType) {
-        if (sprites == null) {
-            sprites = GetComponentsInChildren<SpriteRenderer>();
+        if (sprite == null) {
+            sprite = GetComponent<SpriteRenderer>();
         }
 
         tail = pickUpType.tail;
         color = pickUpType.color;
 
-        foreach (SpriteRenderer sprite in sprites) {
-            sprite.color = color;
-        }
-
+        sprite.color = color;
     }
 }

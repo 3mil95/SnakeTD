@@ -13,6 +13,7 @@ public class EnemyMove : MonoBehaviour
     
     private void Start() {
         GameGrid.grid.scaleToGrid(transform, 0.7f);
+        speed *= GameGrid.grid.celSize;
         UpdatePath();
     }
 

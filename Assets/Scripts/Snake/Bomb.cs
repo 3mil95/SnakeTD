@@ -42,6 +42,7 @@ public class Bomb : MonoBehaviour
             EnemyHandler.main.BombEnemies(transform.position, range, dmg, dmgCurve);
             GameObject expObject = Instantiate(explotion, transform.position, Quaternion.identity);
             expObject.transform.localScale = new Vector3(2 * range, 2 * range, 2 * range);
+            ScreenShake.main.ScreenShack();
             Destroy(expObject, 0.1f);
             Destroy(gameObject);
         }  

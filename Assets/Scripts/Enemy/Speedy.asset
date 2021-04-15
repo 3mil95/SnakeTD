@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Speedy
   m_EditorClassIdentifier: 
   color: {r: 1, g: 1, b: 0, a: 1}
-  moveSpeed: 0.6
+  moveSpeed: 1
   health: 2

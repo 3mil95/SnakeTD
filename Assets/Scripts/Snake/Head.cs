@@ -9,6 +9,7 @@ public class Head : MonoBehaviour
     private Vector3 vel = new Vector3(1,0,0);
 
     bool hasTurned = false;
+    bool hasCollided = false;
 
     Tail next;
     Tail tail;
@@ -45,7 +46,20 @@ public class Head : MonoBehaviour
     }
 
     private void OnCollisionEnter2D(Collision2D other) {
-        GameScript.main.GameOver();
+
+
+        if (other.gameObject.tag != "Enemy") {
+            GameScript.main.GameOver(); 
+        };
+        
+        if (next == null && !hasCollided) {
+            GameScript.main.GameOver();
+            return;
+        }
+        
+        Enemy enemy = other.gameObject.GetComponent<Enemy>();
+        enemy.health.EnemyDestroy();
+        RemoveTail();
     }
 
 
@@ -57,6 +71,19 @@ public class Head : MonoBehaviour
         go.transform.parent = transform.parent;
         float scale = GameGrid.grid.celSize;
         go.transform.localScale = new Vector3(scale, scale, scale);
+    }
+
+    private void RemoveTail() {
+        if (hasCollided) return;
+        hasCollided = true;
+        GameObject tailRemoved = next.gameObject;
+        next = next.next;
+        if (next == null) {
+            next = null;
+            tail = null;
+        }
+        Destroy(tailRemoved);
+        transform.position = tailRemoved.transform.position;
     }
 
     private void addTail(Tail newTail) {
@@ -82,21 +109,39 @@ public class Head : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
-    private void Update() {
+    private void handleInputs() {
+        float input = 0;
+
         if (Input.GetKeyDown(KeyCode.LeftArrow) && !hasTurned) {
-            transform.Rotate(new Vector3(0,0,90));
-            hasTurned = true;
+            input = 1;
         } else if (Input.GetKeyDown(KeyCode.RightArrow) && !hasTurned) {
-            transform.Rotate(new Vector3(0,0,-90));
+            input = -1;
+        } else if (Input.touchCount > 0 && !hasTurned) {
+            if (Input.GetTouch(0).phase == TouchPhase.Began) {
+                float clickPosX = Camera.main.ScreenToWorldPoint(Input.GetTouch(0).position).x;
+                if (clickPosX > 0) {
+                    input = -1;
+                } else if (clickPosX < 0) {
+                    input = 1;
+                }
+            }
+        }
+        if (input != 0) {
+            transform.Rotate(new Vector3(0,0,90) * input);
             hasTurned = true;
         }
+    }
+
+    // Update is called once per frame
+    private void Update() {
+        handleInputs();
         
         time -= Time.deltaTime;
         if (time <= 0) {
             Move();
             time = speed;
             hasTurned = false;
+            hasCollided = false;
             EnemyHandler.main.UpdateEnemyPaths();
         } 
 
