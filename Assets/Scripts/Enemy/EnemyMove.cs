@@ -19,8 +19,8 @@ public class EnemyMove : MonoBehaviour
 
     void Update()
     {
-        float time = Time.deltaTime;
-        slowDuration -= Time.deltaTime;
+        float time = Time.deltaTime * GameScript.main.timeScale;
+        slowDuration -= Time.deltaTime * GameScript.main.timeScale;
         if (slowDuration <= 0) {
             slow = 0;
         }

@@ -26,7 +26,6 @@ public class PickUpSpawner : MonoBehaviour
 
     public void SpawnPickUp(bool isTurret) {
         GameObject go = Instantiate(pickUp, new Vector3(1000, -10000, -1), Quaternion.identity);
-        
         PickUp pu = go.GetComponent<PickUp>();
 
         int type = 0;
@@ -47,11 +46,4 @@ public class PickUpSpawner : MonoBehaviour
         GameGrid.grid.addObjectToGrid(index, -2, go);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Space)) {
-            SpawnPickUp(false);
-        }
-    }
 }

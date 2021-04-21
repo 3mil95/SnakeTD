@@ -20,6 +20,8 @@ public class EnemyHandler : MonoBehaviour
 
     public void RemoveEnemy(Enemy enemy) {
         enemies.Remove(enemy);
+
+        GameScript.main.AddScore(5 + Head.length * 1 + WaveHandler.main.WaveNumber * 2);
     }
 
     public void UpdateEnemyPaths() {
@@ -32,7 +34,6 @@ public class EnemyHandler : MonoBehaviour
         float nearestDist = range*range;
 
         for (int i = enemies.Count-1; i >= 0; i--) {
-            Debug.Log(i);
             Enemy enemy = enemies[i];
             float sqDist = Mathf.Pow(pos.x - enemy.transform.position.x, 2) + Mathf.Pow(pos.y - enemy.transform.position.y, 2);
             if (sqDist < nearestDist) {

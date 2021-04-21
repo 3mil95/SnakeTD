@@ -96,7 +96,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dmg: 3
-  range: 3
+  range: 2.5
   dmgCurve:
     serializedVersion: 2
     m_Curve:

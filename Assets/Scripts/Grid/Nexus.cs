@@ -6,11 +6,12 @@ using TMPro;
 public class Nexus : MonoBehaviour
 {
     public int health = 50;
-
     public TextMeshProUGUI healthText;
+    public Head head;
 
     private void Start() {
         SetHealthText();
+        head = FindObjectOfType<Head>();
     }
 
     private void SetHealthText() {
@@ -24,6 +25,9 @@ public class Nexus : MonoBehaviour
         SetHealthText();
         
         if(health <= 0) {
+            if (head != null) {
+                head.DestroySnake();
+            }
             GameScript.main.GameOver();
         }        
     }

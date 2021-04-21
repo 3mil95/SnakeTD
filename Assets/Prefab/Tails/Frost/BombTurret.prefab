@@ -45,5 +45,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bomb: {fileID: 0}
   fierRate: 1
-  range: 2
+  range: 3.2
   soundPlayer: {fileID: 0}

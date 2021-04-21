@@ -20,7 +20,7 @@ public class PickUp : MonoBehaviour
     }
 
     private void Update() {
-        lifeTime -= Time.deltaTime;
+        lifeTime -= Time.deltaTime * GameScript.main.timeScale;
         setOpacity(lifeTime / 5);
         if (lifeTime <= 0) {
             Destroy(gameObject);

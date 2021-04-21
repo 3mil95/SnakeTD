@@ -61,14 +61,14 @@ public class EnemySpwner : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        delay -= Time.deltaTime;
+        delay -= Time.deltaTime * GameScript.main.timeScale;
 
         if (delay > 0) {
             setOpacity((2-delay) / 2);
             return;
         }
 
-        time -= Time.deltaTime;
+        time -= Time.deltaTime * GameScript.main.timeScale;
         if (time <= 0) {
             GameObject go = Instantiate(enemy, transform.position, Quaternion.identity);
             Enemy enemyObject = go.GetComponent<Enemy>();

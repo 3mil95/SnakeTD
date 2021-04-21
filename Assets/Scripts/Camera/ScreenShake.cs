@@ -24,7 +24,7 @@ public class ScreenShake : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float deltaTime = Time.deltaTime;
+        float deltaTime = Time.deltaTime * GameScript.main.timeScale;
         if (time != -1) {
             time += deltaTime;
             transform.position = pos + dir * Mathf.Sin((time / duration) * 2 * Mathf.PI);

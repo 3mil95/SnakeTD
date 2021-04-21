@@ -25,7 +25,7 @@ public class Shooter : MonoBehaviour
     }
 
     void Update() {
-        time -= Time.deltaTime;
+        time -= Time.deltaTime * GameScript.main.timeScale;
 
         if (time <= speed * 0.95f) {
             beam.positionCount = 0;

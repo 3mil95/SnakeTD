@@ -30,7 +30,7 @@ public class FrostTurret : MonoBehaviour
     }
 
     private void Update() {
-        time += Time.deltaTime;
+        time += Time.deltaTime * GameScript.main.timeScale;
         float cTime = time;
 
         if (cTime < fierRate) return;

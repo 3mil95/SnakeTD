@@ -26,7 +26,6 @@ public class GameGrid : MonoBehaviour
 
         Vector3 c = Camera.main.ScreenToWorldPoint(new Vector3(1,1,1));
         float size = Mathf.Min(Mathf.Abs(c.x), Mathf.Abs(c.y));
-        Debug.Log(size);
 
         celSize = Mathf.Floor((size * 2) / (gridSize) * 10) / 10;
          

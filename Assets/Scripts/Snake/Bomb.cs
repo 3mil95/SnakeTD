@@ -33,7 +33,7 @@ public class Bomb : MonoBehaviour
     {
         if (endPos == null) return;  
 
-        time += Time.deltaTime;
+        time += Time.deltaTime * GameScript.main.timeScale;
 
         float t = (time * speed) / dist;
         transform.position = Vector3.Lerp(startPos, endPos, t);

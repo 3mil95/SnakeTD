@@ -19,7 +19,7 @@ public class BombTurret : MonoBehaviour
     }
 
     void Update() {
-        time -= Time.deltaTime;
+        time -= Time.deltaTime * GameScript.main.timeScale;
 
         if (time <= 0) {
             Shoot();

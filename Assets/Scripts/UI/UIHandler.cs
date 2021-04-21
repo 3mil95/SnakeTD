@@ -10,6 +10,10 @@ public class UIHandler : MonoBehaviour
     private TextMeshProUGUI waveNumberText;
     [SerializeField]
     private TextMeshProUGUI nextWaveText;
+    [SerializeField]
+    private TextMeshProUGUI scoreText;
+    [SerializeField]
+    private TextMeshProUGUI startText;
 
     public static UIHandler main { get; private set; }
 
@@ -29,5 +33,13 @@ public class UIHandler : MonoBehaviour
         nextWaveText.enabled = true;
         time = Mathf.Round(time);
         nextWaveText.text = "Next Wave: " + time.ToString(); 
+    }
+
+    public void RemoveStartText() {
+        startText.enabled = false;
+    }
+
+    public void SetScoreText(int score) {
+        scoreText.text = "Score: " + score.ToString();
     }
 }

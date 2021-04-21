@@ -18,6 +18,17 @@ public class Head : MonoBehaviour
 
     [SerializeField]
     private SoundPlayer soundPlayer;
+    [SerializeField] 
+    private GameObject startTailType;
+    [SerializeField]
+    private GameObject explotion;
+
+    [SerializeField]
+    private int numberOfTailsAtStart = 5;
+
+    private SpriteRenderer spriteRenderer;
+
+    public static int length = 1;
 
     
 
@@ -25,12 +36,14 @@ public class Head : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        for (int i = 0; i < numberOfTailsAtStart; i++) {
+            addTail(startTailType);
+        }
+        spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
 
     private void OnTriggerEnter2D(Collider2D other) {
-        Debug.Log("pickup");
         PickUp pu = other.gameObject.GetComponent<PickUp>();
         if (pu == null) {
             return;
@@ -50,10 +63,13 @@ public class Head : MonoBehaviour
 
         if (other.gameObject.tag != "Enemy") {
             GameScript.main.GameOver(); 
+            DestroySnake();
+            return;
         };
         
         if (next == null && !hasCollided) {
             GameScript.main.GameOver();
+            DestroySnake();
             return;
         }
         
@@ -74,8 +90,10 @@ public class Head : MonoBehaviour
     }
 
     private void RemoveTail() {
+        length--;
         if (hasCollided) return;
         hasCollided = true;
+        next.Explosion();
         GameObject tailRemoved = next.gameObject;
         next = next.next;
         if (next == null) {
@@ -87,6 +105,7 @@ public class Head : MonoBehaviour
     }
 
     private void addTail(Tail newTail) {
+        length++;
         if (tail) {
             tail.AddTail(newTail);
             tail = newTail;
@@ -96,9 +115,25 @@ public class Head : MonoBehaviour
         next = newTail;
     }
 
+    public void DestroySnake() {
+        if (next != null) {
+            next.DestroyTail();
+        }
+        ScreenShake.main.ScreenShack();
+        ExplosionHandler.Explosion(transform.position, spriteRenderer.color);
+        Destroy(gameObject);
+    }
+
     public void Move() {
         Vector3 pos = transform.position;
         Vector3 newPos = pos + transform.up * GameGrid.grid.celSize;
+        
+        if (!GameGrid.grid.isInGrid(newPos)) {
+            DestroySnake();
+            GameScript.main.GameOver();
+            return;
+        }
+
         transform.position = newPos;
 
         GameGrid.grid.setStatInGrid(pos, false);
@@ -127,6 +162,7 @@ public class Head : MonoBehaviour
             }
         }
         if (input != 0) {
+            if (!GameScript.main.IsStarted()) { return; }
             transform.Rotate(new Vector3(0,0,90) * input);
             hasTurned = true;
         }
@@ -136,7 +172,7 @@ public class Head : MonoBehaviour
     private void Update() {
         handleInputs();
         
-        time -= Time.deltaTime;
+        time -= Time.deltaTime * GameScript.main.timeScale;
         if (time <= 0) {
             Move();
             time = speed;
@@ -145,8 +181,5 @@ public class Head : MonoBehaviour
             EnemyHandler.main.UpdateEnemyPaths();
         } 
 
-        if (!GameGrid.grid.isInGrid(transform.position)) {
-            GameScript.main.GameOver();
-        }
     }
 }
